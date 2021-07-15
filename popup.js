@@ -482,7 +482,7 @@ function makeRequest (method, url, headers, obj) {
 			// }
 			console.log(accToken, token);
 			token = 'Bearer ' + token;
-			
+			xhr.setRequestHeader('Authorization', token);
 		}
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.setRequestHeader('trakt-api-version', '2');
