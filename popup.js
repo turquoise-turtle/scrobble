@@ -735,7 +735,7 @@ function sStop(){
 }
 function sScrobble(action, progress) {
 	console.log(window.ids);
-	console.log(currentepobj);
+	console.log(currentepobj || movieobj);
 	var ep = window.ids;
 	// qS('#checkincheck').classList.add('hide');
 	// qS('#checkindonut').classList.remove('hide');
