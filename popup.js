@@ -80,7 +80,7 @@ function needsRefresh() {
 	check.setMonth(check.getMonth() - 2);
 	console.log(ref, check);
 	if (ref < check) {
-		return refresh()
+		return refreshToken()
 	} else {
 		console.log('no refresh needed')
 		return false;
@@ -88,7 +88,7 @@ function needsRefresh() {
 	
 }
 
-function refresh() {
+function refreshToken() {
 	console.log('refreshing token');
 	//return browser.storage.local.get(['refresh_token'])
 	var refToken = localStorage.getItem('SCROBBLErefresh_token');
