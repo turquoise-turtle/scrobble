@@ -16,7 +16,7 @@ console.log(ref, check, refreshNeeded);
 if (accToken == false) {
 	auth();
 } else if (refreshNeeded) {
-	refresh();
+	refreshToken();
 }
 // 	if (e['access_token'] == false) {
 // 		auth();
