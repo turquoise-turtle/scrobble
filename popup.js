@@ -735,7 +735,7 @@ function sStop(){
 }
 function sScrobble(action, progress) {
 	console.log(window.ids);
-	console.log(currentepobj || movieobj);
+	
 	var ep = window.ids;
 	// qS('#checkincheck').classList.add('hide');
 	// qS('#checkindonut').classList.remove('hide');
@@ -747,12 +747,14 @@ function sScrobble(action, progress) {
 		'Authorization': 'Bearer ' + token
 	};
 	if (!movie) {
+		console.log(currentepobj);
 		var req = {
 			'episode': {
 				'ids': ep
 			}
 		}
 	} else {
+		console.log(movieobj);
 		var req = {
 			'movie': movieobj
 		}
