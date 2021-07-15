@@ -138,10 +138,16 @@ var ids = {};
 var seasons = false;
 var showSeasons = [];
 var qS = document.querySelector.bind(document);
+var movie = false;
+var movieobj = null;
 
-function searchshows(showtitle) {
+function searchshows(showtitle, movie) {
+	movie = movie || false;
 
 	var url = 'https://api.trakt.tv/search/show?query=' + showtitle;
+	if (movie) {
+		url = 'https://api.trakt.tv/search/movie?query=' + showtitle;
+	}
 
 	makeRequest('GET', url)//, obj, headers)
 	.then(function(responseText) {
@@ -155,9 +161,16 @@ function searchshows(showtitle) {
 		for (var show of shows) {
 			console.log(show['score'])
 			if (show['score'] > 500) {
-				var slug = show['show']['ids']['slug'];
-				li[slug] = show['show']['title'];
-				var year = show['show']['year'];
+				if (movie) {
+					var slug = show['movie']['ids']['slug'];
+					li[slug] = show['movie']['title'];
+					var year = show['movie']['year'];
+				} else {
+					var slug = show['show']['ids']['slug'];
+					li[slug] = show['show']['title'];
+					var year = show['show']['year'];
+				}
+				
 				years[slug] = year;
 			}
 		}
@@ -165,14 +178,19 @@ function searchshows(showtitle) {
 		var resultLength = Object.keys(li).length;
 		if (resultLength == 1) {
 			qS('#searchshow').classList.add('hide');
-			var slug = shows[0]['show']['ids']['slug'];
-			var title = shows[0]['show']['title']
+			if (movie) {
+				var slug = shows[0]['movie']['ids']['slug'];
+				var title = shows[0]['movie']['title']
+			} else {
+				var slug = shows[0]['show']['ids']['slug'];
+				var title = shows[0]['show']['title']
+			}
 			qS('#showtitle').textContent = title;
-			initiateshow(slug);
+			initiateshow(slug, movie);
 			qS('#refine').classList.add('hide');
 		} else if (resultLength > 1) {
 			qS('#searchshow').classList.add('hide');
-			showlist(li, years);
+			showlist(li, years, movie);
 			// qS('#refine').classList.add('hide');
 		} else {
 			// qS('#notfound').classList.remove('hide');
@@ -182,7 +200,7 @@ function searchshows(showtitle) {
 	})
 }
 
-function showlist(list, years) {
+function showlist(list, years, movie) {
 	var select = qS('#sel');
 	var box = qS('#selectshows')
 	box.style.display = '';
@@ -199,24 +217,30 @@ function showlist(list, years) {
 		box.style.display = 'none';
 		var title = select.options[select.selectedIndex].text;
 		qS('#showtitle').textContent = title;
-		initiateshow(slug);
+		initiateshow(slug, movie);
 	})
 	
 }
 
-function initiateshow(show) {
+function initiateshow(show, movie) {
+	movie = movie || false;
+	if (!movie) {
+		qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
+		
+		getnextep();
+		// browser.storage.local.get('access_token')
+		// .then(function(e){
+		// 	window.token = e['access_token'];
+		// 	window.showid = show;
+		// 	getnextep();
+		// });
+	} else {
+		qS('#showtitle').href = 'https://trakt.tv/movies/' + show;
+		loadMovie();
+	}
 	
-	qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
 	window.token = localStorage.getItem('SCROBBLEaccess_token');
 	window.showid = show;
-	getnextep();
-	// browser.storage.local.get('access_token')
-	// .then(function(e){
-	// 	window.token = e['access_token'];
-	// 	window.showid = show;
-	// 	getnextep();
-	// });
-
 	qS('#scrobble').classList.remove('hide');
 }
 function getnextep() {
@@ -360,6 +384,53 @@ function getnexteprewatch(slug, resetdate, seasons) {
 	}
 }
 
+
+function loadMovie() {
+	var headers = true;
+	var url = 'https://api.trakt.tv/movies/' + window.showid + '?extended=full';
+	makeRequest('GET', url, headers)
+	.then(function (responseText) {
+		var body = JSON.parse(responseText);
+		console.log(body);
+		window.movieobj = body;
+		window.movie = true;
+		qS('#ep').style.display = "";
+		qS('#loadingtext').classList.add('hide');
+		qS('#showtitle').classList.remove('hide');
+		
+
+		if (movieobj.runtime == null) {
+			qS('#eptitle').textContent = movieobj.status;
+			for (var actionel of document.getElementsByClassName('action')) {
+				actionel.classList.add('hide');
+			}
+		} else {
+			qS('#watchdonut').classList.add('hide');
+			qS('#checkindonut').classList.add('hide');
+			qS('#watchcheck').classList.remove('hide');
+			qS('#checkincheck').classList.remove('hide');
+			
+			qS('#watch').addEventListener('click', watch);
+			qS('#watchcheck').addEventListener('click', watch);
+			qS('#check').addEventListener('click', check);
+			qS('#checkincheck').addEventListener('click', check);
+			var runtime = movieobj['runtime'];
+			var runtimes = runtime * 60;
+			var hours = Math.floor(runtime / 60);
+			var minutes = runtime % 60;
+			if (hours > 0) {
+				hours = hours + ':';
+			} else {
+				hours = '';
+			}
+			qS('#scrobbleslider').max = runtimes;
+			qS('#totalTime').innerText = hours + minutes + ':00';
+			qS('#scrobbleslider').value = 0;
+			qS('#scrobbleTime').innerText = '00:00';
+		}
+	});
+}
+
 // watch = console.log;
 // check = console.log;
 
@@ -377,21 +448,37 @@ function watch() {
 	};
 	var d = new Date();
 	var n = d.toISOString();
-	var req = {
-		'episodes': [
-			{
-				'watched_at': n,
-				'ids': ep
-			}
-		]
+	
+	if (!movie) {
+		var req = {
+			'episodes': [
+				{
+					'watched_at': n,
+					'ids': ep
+				}
+			]
+		}
+	} else {
+		var mobj = movieobj;
+		mobj['watched_at'] = n;
+		var req = {
+			'movies': [
+				mobj
+			]
+		}
 	}
+	
 	makeRequest('POST', 'https://api.trakt.tv/sync/history', headers, req)
 	.then(function(responseText) {
 		var body = JSON.parse(responseText);
 		console.log(body);
 		qS('#watchdonut').classList.add('hide');
 		qS('#watchtick').classList.remove('hide');
-		refresh();
+		qS('#checkincheck').classList.add('hide');
+		
+		if (!movie) {
+			refresh();
+		}
 	});
 }
 
@@ -403,9 +490,16 @@ function check() {
 	var headers = {
 		'Authorization': 'Bearer ' + token
 	};
-	var req = {
-		'episode': {
-			'ids': ep
+	
+	if (!movie) {
+		var req = {
+			'episode': {
+				'ids': ep
+			}
+		}
+	} else {
+		var req = {
+			'movie': movieobj
 		}
 	}
 	makeRequest('POST', 'https://api.trakt.tv/checkin', headers, req)
@@ -556,7 +650,12 @@ var separate = params.get("separate");
 	qS('#scrobbleTime').innerText = '0:00';
 	qS('#totalTime').innerText = '0:00';
 	qS('#scrobbleslider').oninput = function() {
-		var seconds = this.value % 60;
+		var runtime = this.value;
+		var seconds = runtime % 60;
+		var minutes = runtime % 3600;
+		var hours = runtime % 216000;
+		hours = (hours > 0 ? hours + ':' : '');
+		minutes = (minutes < 10 ? '0' : '')+ minutes;
 		seconds = (seconds < 10 ? '0' : '') + seconds;
 		var minutes = Math.floor(this.value / 60);
 		var text = minutes + ':' + seconds;
@@ -630,12 +729,18 @@ function sScrobble(action, progress) {
 	var headers = {
 		'Authorization': 'Bearer ' + token
 	};
-	var req = {
-		'episode': {
-			'ids': ep
-		},
-		'progress': progress
+	if (!movie) {
+		var req = {
+			'episode': {
+				'ids': ep
+			}
+		}
+	} else {
+		var req = {
+			'movie': movieobj
+		}
 	}
+	req.progress = progress;
 	console.log('https://api.trakt.tv/scrobble/' + action, headers, req);
 	return makeRequest('POST', 'https://api.trakt.tv/scrobble/' + action, headers, req)
 	.then(function (responseText) {
