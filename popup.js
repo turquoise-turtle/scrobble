@@ -173,7 +173,7 @@ function searchshows(showtitle) {
 			// qS('#refine').classList.add('hide');
 		} else {
 			// qS('#notfound').classList.remove('hide');
-			searchbox(currentTab.title);
+			searchbox('');
 			
 		}
 	})
@@ -204,13 +204,15 @@ function showlist(list, years) {
 function initiateshow(show) {
 	
 	qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
-
-	browser.storage.local.get('access_token')
-	.then(function(e){
-		window.token = e['access_token'];
-		window.showid = show;
-		getnextep();
-	});
+	window.token = localStorage.getItem('access_token');
+	window.showid = show;
+	getnextep();
+	// browser.storage.local.get('access_token')
+	// .then(function(e){
+	// 	window.token = e['access_token'];
+	// 	window.showid = show;
+	// 	getnextep();
+	// });
 }
 function getnextep() {
 	console.log('getnextep');
@@ -506,7 +508,7 @@ function progressUpdate() {
 		}
 	}).catch(console.warn);
 }
-qS('#pbtn').addEventListener('click', progressUpdate);
+//qS('#pbtn').addEventListener('click', progressUpdate);
 
 
 function lbSearchHandler() {
@@ -519,7 +521,7 @@ qS('#lbBtn').addEventListener('click', lbSearchHandler);
 
 var params = new URLSearchParams(document.location.search.substring(1));
 var separate = params.get("separate");
-if (separate != null) {
+// if (separate != null) {
 	separate = true;
 	qS('#lbBtn').classList.remove('hide');
 	qS('#scrobble').classList.remove('hide');
@@ -533,7 +535,7 @@ if (separate != null) {
 		var text = minutes + ':' + seconds;
 		qS('#scrobbleTime').innerText = text;
 	}
-	var title = params.get('title');
+	var title = params.get('title') || '';
 	searchbox(title);
 
 	qS('#play').addEventListener('click', sPlay);
@@ -541,36 +543,36 @@ if (separate != null) {
 	qS('#stop').addEventListener('click', sStop);
 
 	
-} else {
-	separate = false;
-	qS('#ozshows').addEventListener('click', function(e){
-		window.open(location.href + '?separate=true&title=' + currentTab.title);
-	});
+// } else {
+// 	separate = false;
+// 	qS('#ozshows').addEventListener('click', function(e){
+// 		window.open(location.href + '?separate=true&title=' + currentTab.title);
+// 	});
 
-	var currentTab;
-	browser.tabs.query({currentWindow: true, active: true})
-	.then(function(t) {
-		currentTab = t[0];
-		//console.log(t);
-		var id = t[0]['id'];
-		console.log(id, t);
-		return browser.tabs.sendMessage(id, {'type':'show'});
-	}).then(function(msg) {
-		console.log(msg);
-		if (msg['valid']) {
-			searchshows(msg['show'])
-		}
-		//return browser.tabs.query({currentWindow: true, active: true})
-	//}).then(function(t) {
-		//var id = t[0]['id'];
-		// console.log(id);
-		//return browser.tabs.sendMessage(id, {'type':'scrobble'});
-	}).catch(function(err){
-		//no content script in current page
-		console.log('no content script', currentTab)
-		searchbox(currentTab.title);
-	});
-}
+// 	var currentTab;
+// 	browser.tabs.query({currentWindow: true, active: true})
+// 	.then(function(t) {
+// 		currentTab = t[0];
+// 		//console.log(t);
+// 		var id = t[0]['id'];
+// 		console.log(id, t);
+// 		return browser.tabs.sendMessage(id, {'type':'show'});
+// 	}).then(function(msg) {
+// 		console.log(msg);
+// 		if (msg['valid']) {
+// 			searchshows(msg['show'])
+// 		}
+// 		//return browser.tabs.query({currentWindow: true, active: true})
+// 	//}).then(function(t) {
+// 		//var id = t[0]['id'];
+// 		// console.log(id);
+// 		//return browser.tabs.sendMessage(id, {'type':'scrobble'});
+// 	}).catch(function(err){
+// 		//no content script in current page
+// 		console.log('no content script', currentTab)
+// 		searchbox(currentTab.title);
+// 	});
+// }
 
 function sPlay() {
 	sScrobble('start')
