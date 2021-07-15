@@ -657,7 +657,7 @@ function initiateSelect() {
 		o.dataset.episodes = season.aired;
 		qS('#seasonSelect').appendChild(o);
 	}
-	qS('#seasonSelect').addEventListener('change', function(event){
+	qS('#seasonSelect').addEventListener('change', function(e){
 		var number = e.target.options[e.target.options.selectedIndex].dataset.episodes;
 		qS('#episodeSelect').innerHTML = '';
 		for (var i = 0; i < number; i++) {
@@ -680,6 +680,8 @@ function initiateSelect() {
 			window.currentepobj = body;
 			return body;
 		}).then(loadEpisode);
-	})
+	});
+	
 	showedSeasons = true;
+	qS('#episodeSelectBox').classList.remove('hide');
 }
