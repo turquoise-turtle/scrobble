@@ -135,6 +135,8 @@ console.log('popup asdf');
 var token = accToken;
 var showid = 'g';
 var ids = {};
+var seasons = false;
+var showSeasons = [];
 var qS = document.querySelector.bind(document);
 
 function searchshows(showtitle) {
@@ -231,6 +233,12 @@ function getnextep() {
 		var body = JSON.parse(responseText);
 		console.log(body)
 		console.log(body['next_episode'])
+
+		if (!window.showedSeasons) {
+			window.seasons = body['seasons'];
+			initiateSelect();
+		}
+
 		
 		//promisify this
 		return new Promise(function(resolve, reject) {
@@ -247,7 +255,10 @@ function getnextep() {
 				resolve(null);
 			}
 		})
-	}).then(function (currentepobj){
+	}).then(loadEpisode);
+}
+function loadEpisode(currentepobj) {
+	//}).then(function (currentepobj){
 		console.log('got here', currentepobj)
 		if (currentepobj == null) {
 			//no next episode
@@ -285,7 +296,8 @@ function getnextep() {
 			qS('#checkincheck').addEventListener('click', check);
 
 			//show scrobble bar?
-			if (separate) {
+			
+			if (currentepobj.runtime == null) {
 				var headers = {
 					'Authorization': 'Bearer ' + window.token
 				};
@@ -293,6 +305,7 @@ function getnextep() {
 				makeRequest('GET', url, headers)
 				.then(function (responseText) {
 					var body = JSON.parse(responseText);
+					window.currentepobj = body;
 					var runtime = body['runtime'];
 					var runtimes = runtime * 60;
 					qS('#scrobbleslider').max = runtimes;
@@ -300,9 +313,16 @@ function getnextep() {
 					qS('#scrobbleslider').value = 0;
 					qS('#scrobbleTime').innerText = '0:00';
 				});
+			} else {
+				var runtime = currentepobj['runtime'];
+				var runtimes = runtime * 60;
+				qS('#scrobbleslider').max = runtimes;
+				qS('#totalTime').innerText = runtime + ':00';
+				qS('#scrobbleslider').value = 0;
+				qS('#scrobbleTime').innerText = '0:00';
 			}
 		}
-	});
+	//});
 
 }
 function getnexteprewatch(slug, resetdate, seasons) {
@@ -627,4 +647,38 @@ function sScrobble(action, progress) {
 		// refresh();
 		return null;
 	});
+}
+
+function initiateSelect() {
+	for (var season of seasons) {
+		var o = document.createElement('option');
+		o.value = season.number;
+		o.innerText = season.title || season.number;
+		o.dataset.episodes = season.aired;
+		qS('#seasonSelect').appendChild(o);
+	}
+	qS('#seasonSelect').addEventListener('change', function(event){
+		var number = e.target.options[e.target.options.selectedIndex].dataset.episodes;
+		qS('#episodeSelect').innerHTML = '';
+		for (var i = 0; i < number; i++) {
+			var o = document.createElement('option');
+			o.value = i;
+			o.innerText = i;
+			qS('#episodeSelect').appendChild(o);
+		}
+	});
+	qS('#episodeSelectBtn').addEventListener('click', function(){
+		var season = qS('#seasonSelect').value;
+		var episode = qS('#episodeSelect').value;
+		var headers = {
+			'Authorization': 'Bearer ' + window.token
+		};
+		var url = 'https://api.trakt.tv/shows/' + window.showid + '/seasons/' + season + '/episodes/' + episode + '?extended=full';
+		makeRequest('GET', url, headers)
+		.then(function (responseText) {
+			var body = JSON.parse(responseText);
+			window.currentepobj = body;
+			return body;
+		}).then(loadEpisode);
+	})
 }
