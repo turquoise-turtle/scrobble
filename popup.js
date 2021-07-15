@@ -486,7 +486,7 @@ function makeRequest (method, url, headers, obj) {
 		}
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.setRequestHeader('trakt-api-version', '2');
-		xhr.setRequestHeader('trakt-api-key', '6495975d86f6270a58f745c62216b7b7d35516f301fe94a401ba64f95d8d6b01');
+		xhr.setRequestHeader('trakt-api-key', '36972228e7adee83436c7b32d4cac424cea0c030445512428c45508bf1c3e7dc');
 		if (obj) {
 			xhr.send(JSON.stringify(obj))
 		} else {
