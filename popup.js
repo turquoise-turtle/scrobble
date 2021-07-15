@@ -658,9 +658,9 @@ function initiateSelect() {
 		qS('#seasonSelect').appendChild(o);
 	}
 	qS('#seasonSelect').addEventListener('change', function(e){
-		var number = e.target.options[e.target.options.selectedIndex].dataset.episodes;
+		var number = parseInt(e.target.options[e.target.options.selectedIndex].dataset.episodes) + 1;
 		qS('#episodeSelect').innerHTML = '';
-		for (var i = 1; i < number + 1; i++) {
+		for (var i = 1; i < number; i++) {
 			var o = document.createElement('option');
 			o.value = i;
 			o.innerText = i;
@@ -668,9 +668,9 @@ function initiateSelect() {
 		}
 	});
 		qS('#seasonSelect').selectedIndex = 0;
-		var number = qS('#seasonSelect').options[0].dataset.episodes;
+		var number = parseInt(qS('#seasonSelect').options[0].dataset.episodes) + 1;
 		qS('#episodeSelect').innerHTML = '';
-		for (var i = 1; i < number + 1; i++) {
+		for (var i = 1; i < number; i++) {
 			var o = document.createElement('option');
 			o.value = i;
 			o.innerText = i;
