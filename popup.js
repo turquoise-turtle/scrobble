@@ -216,6 +216,8 @@ function initiateshow(show) {
 	// 	window.showid = show;
 	// 	getnextep();
 	// });
+
+	qS('#scrobble').classList.remove('hide');
 }
 function getnextep() {
 	console.log('getnextep');
@@ -549,7 +551,7 @@ var separate = params.get("separate");
 // if (separate != null) {
 	separate = true;
 	qS('#lbBtn').classList.remove('hide');
-	qS('#scrobble').classList.remove('hide');
+	// qS('#scrobble').classList.remove('hide');
 	qS('body').classList.add('separate');
 	qS('#scrobbleTime').innerText = '0:00';
 	qS('#totalTime').innerText = '0:00';
