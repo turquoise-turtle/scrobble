@@ -12,9 +12,9 @@ request.onreadystatechange = function () {
 		// console.log('Body:', this.responseText);
 		var body = JSON.parse(this.responseText);
 		console.log(body);
-		localStorage.setItem('access_token', body['access_token']);
-		localStorage.setItem('refresh_token', body['refresh_token']);
-		localStorage.setItem('date', new Date().getTime());
+		localStorage.setItem('SCROBBLEaccess_token', body['access_token']);
+		localStorage.setItem('SCROBBLErefresh_token', body['refresh_token']);
+		localStorage.setItem('SCROBBLEdate', new Date().getTime());
 		// let settingItem = browser.storage.local.set({
 		// 	'access_token': body['access_token'],
 		// 	'refresh_token': body['refresh_token'],

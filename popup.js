@@ -1,8 +1,8 @@
 // browser.storage.local.get({
 	// 'access_token': false,
-var accToken = localStorage.getItem('access_token') || false;
+var accToken = localStorage.getItem('SCROBBLEaccess_token') || false;
 	// 'date': new Date().getTime()
-var accDate = localStorage.getItem('date') || new Date().getTime();
+var accDate = localStorage.getItem('SCROBBLEdate') || new Date().getTime();
 // }).then(function(e) {
 	// console.log(e);
 console.log(accToken, accDate);
@@ -70,7 +70,7 @@ function auth() {
 
 
 function needsRefresh() {
-	var date = localStorage.getItem('date');
+	var date = localStorage.getItem('SCROBBLEdate');
 	// return browser.storage.local.get(['date'])
 	// .then(function(s){
 		// var ref = new Date(s['date']);
@@ -90,7 +90,7 @@ function needsRefresh() {
 function refresh() {
 	console.log('refreshing token');
 	//return browser.storage.local.get(['refresh_token'])
-	var refToken = localStorage.getItem('refresh_token');
+	var refToken = localStorage.getItem('SCROBBLErefresh_token');
 	// .then(function(s){
 	console.log(refToken)
 	var authlink = 'https://turquoise-turtle.github.io/scrobble/auth.html';
@@ -105,9 +105,9 @@ function refresh() {
 			// console.log('Body:', this.responseText);
 			var body = JSON.parse(this.responseText);
 			console.log(body);
-			localStorage.setItem('access_token', body['access_token']);
-			localStorage.setItem('refresh_token', body['refresh_token']);
-			localStorage.setItem('date', new Date().getTime());
+			localStorage.setItem('SCROBBLEaccess_token', body['access_token']);
+			localStorage.setItem('SCROBBLErefresh_token', body['refresh_token']);
+			localStorage.setItem('SCROBBLEdate', new Date().getTime());
 			// let settingItem = browser.storage.local.set({
 			// 	'access_token': body['access_token'],
 			// 	'refresh_token': body['refresh_token'],
@@ -204,7 +204,7 @@ function showlist(list, years) {
 function initiateshow(show) {
 	
 	qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
-	window.token = localStorage.getItem('access_token');
+	window.token = localStorage.getItem('SCROBBLEaccess_token');
 	window.showid = show;
 	getnextep();
 	// browser.storage.local.get('access_token')
