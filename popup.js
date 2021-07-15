@@ -224,6 +224,8 @@ function showlist(list, years, movie) {
 
 function initiateshow(show, movie) {
 	movie = movie || false;
+	window.token = localStorage.getItem('SCROBBLEaccess_token');
+	window.showid = show;
 	if (!movie) {
 		qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
 		
@@ -239,8 +241,7 @@ function initiateshow(show, movie) {
 		loadMovie();
 	}
 	
-	window.token = localStorage.getItem('SCROBBLEaccess_token');
-	window.showid = show;
+	
 	qS('#scrobble').classList.remove('hide');
 }
 function getnextep() {
@@ -549,6 +550,7 @@ function searchbox(pagetitle) {
 	} else {
 		qS('#showtosearch').value = pagetitle;
 		qS('#searchbtn').addEventListener('click', handlesearchbox)
+		qS('#movieBtn').addEventListener('click', handleMovieSearch)
 		qS('#showtosearch').addEventListener("keyup", function(event) {
 			// Number 13 is the "Enter" key on the keyboard
 			if (event.keyCode === 13) {
@@ -568,6 +570,15 @@ function handlesearchbox() {
 	qS('#searchdonut').classList.remove('hide');
 	qS('#searchbtn').classList.add('hide');
 	// qS('#searchshow').classList.add('hide');
+}
+function handleMovieSearch() {
+	hasSearched = true;
+	var value = qS('#showtosearch').value;
+	
+	qS('#searchdonut').classList.remove('hide');
+	qS('#searchbtn').classList.add('hide');
+
+	searchshows(value, true);
 }
 
 
