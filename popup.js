@@ -2,7 +2,8 @@
 	// 'access_token': false,
 var accToken = localStorage.getItem('SCROBBLEaccess_token') || false;
 	// 'date': new Date().getTime()
-var accDate = parseInt(localStorage.getItem('SCROBBLEdate')) || new Date().getTime();
+var accDate = localStorage.getItem('SCROBBLEdate') || new Date().getTime();
+accDate = parseInt(accDate);
 // }).then(function(e) {
 	// console.log(e);
 console.log(accToken, accDate);
@@ -25,7 +26,7 @@ if (accToken == false) {
 // })
 
 
-//https://api.trakt.tv/oauth/authorize?response_type=code&client_id=6495975d86f6270a58f745c62216b7b7d35516f301fe94a401ba64f95d8d6b01&redirect_uri=https://9340aed018c85b8231e392d11a4d70ab3af8c8a2.extensions.allizom.org/
+//https://api.trakt.tv/oauth/authorize?response_type=code&client_id=
 function auth() {
 	//var authlink = browser.identity.getRedirectURL();
 	var link = 'https://trakt.tv/oauth/authorize?response_type=code&client_id=36972228e7adee83436c7b32d4cac424cea0c030445512428c45508bf1c3e7dc&redirect_uri=https://turquoise-turtle.github.io/scrobble/auth.html';
@@ -57,8 +58,8 @@ function auth() {
 	// 	};
 	// 	var body = {
 	// 		'code': code,
-	// 		'client_id': '6495975d86f6270a58f745c62216b7b7d35516f301fe94a401ba64f95d8d6b01',
-	// 		'client_secret': '21654bd0d5a60b6edcdbf092a4e968f158f38a2ce63cd0341abd44e2f014a923',
+	// 		'client_id': 
+	// 		'client_secret': 
 	// 		'redirect_uri': authlink,
 	// 		'grant_type': 'authorization_code'
 	// 	};
@@ -118,8 +119,8 @@ function refresh() {
 
 	var body = {
 		'refresh_token': refToken,
-		'client_id': '6495975d86f6270a58f745c62216b7b7d35516f301fe94a401ba64f95d8d6b01',
-		'client_secret': '21654bd0d5a60b6edcdbf092a4e968f158f38a2ce63cd0341abd44e2f014a923',
+		'client_id': '36972228e7adee83436c7b32d4cac424cea0c030445512428c45508bf1c3e7dc',
+		'client_secret': '25e40712ee36359ab952b11620ef6ee6be29578a8219fa6e47f2046e6038ac20',
 		'redirect_uri': authlink,
 		'grant_type': 'refresh_token'
 	};
