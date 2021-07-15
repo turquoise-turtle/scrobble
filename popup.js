@@ -132,7 +132,7 @@ function refreshToken() {
 
 console.log('popup asdf');
 
-var token = 'g';
+var token = accToken;
 var showid = 'g';
 var ids = {};
 var qS = document.querySelector.bind(document);
@@ -221,9 +221,10 @@ function getnextep() {
 	qS('#checkintick').classList.add('hide');
 	
 
-	var headers = {
-		'Authorization': 'Bearer ' + window.token
-	};
+	// var headers = {
+		// 'Authorization': 'Bearer ' + window.token
+	// };
+	var headers = true;
 	var url = 'https://api.trakt.tv/shows/' + window.showid + '/progress/watched?hidden=false&specials=false&count_specials=false&last_activity=watched';
 	makeRequest('GET', url, headers)
 	.then(function (responseText) {
@@ -476,9 +477,10 @@ function makeRequest (method, url, headers, obj) {
 			});
 		};
 		if (headers) {
-			for (var key in headers) {
-				xhr.setRequestHeader(key, headers[key]);
-			}
+			// for (var key in headers) {
+				// xhr.setRequestHeader(key, headers[key]);
+			// }
+			token = 'Bearer ' + e['access_token'];
 		}
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.setRequestHeader('trakt-api-version', '2');
