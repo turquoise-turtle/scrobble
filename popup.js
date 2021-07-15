@@ -2,7 +2,7 @@
 	// 'access_token': false,
 var accToken = localStorage.getItem('SCROBBLEaccess_token') || false;
 	// 'date': new Date().getTime()
-var accDate = localStorage.getItem('SCROBBLEdate') || new Date().getTime();
+var accDate = parseInt(localStorage.getItem('SCROBBLEdate')) || new Date().getTime();
 // }).then(function(e) {
 	// console.log(e);
 console.log(accToken, accDate);
@@ -70,7 +70,7 @@ function auth() {
 
 
 function needsRefresh() {
-	var date = localStorage.getItem('SCROBBLEdate');
+	var date = parseInt(localStorage.getItem('SCROBBLEdate'));
 	// return browser.storage.local.get(['date'])
 	// .then(function(s){
 		// var ref = new Date(s['date']);
