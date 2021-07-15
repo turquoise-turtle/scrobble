@@ -681,4 +681,5 @@ function initiateSelect() {
 			return body;
 		}).then(loadEpisode);
 	})
+	showedSeasons = true;
 }
