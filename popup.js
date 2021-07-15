@@ -730,7 +730,11 @@ function sStop(){
 	sScrobble('stop', 1)
 	.then(function(){
 		qS('#stopReminder').classList.add('hide');
-		refresh();
+		if (!movie) {
+			refresh();
+		} else {
+			location.reload();
+		}
 	})
 }
 function sScrobble(action, progress) {
