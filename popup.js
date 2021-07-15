@@ -660,7 +660,7 @@ function initiateSelect() {
 	qS('#seasonSelect').addEventListener('change', function(e){
 		var number = e.target.options[e.target.options.selectedIndex].dataset.episodes;
 		qS('#episodeSelect').innerHTML = '';
-		for (var i = 0; i < number; i++) {
+		for (var i = 1; i < number + 1; i++) {
 			var o = document.createElement('option');
 			o.value = i;
 			o.innerText = i;
