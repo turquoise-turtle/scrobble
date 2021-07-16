@@ -1,85 +1,34 @@
-// browser.storage.local.get({
-	// 'access_token': false,
+
 var accToken = localStorage.getItem('SCROBBLEaccess_token') || false;
-	// 'date': new Date().getTime()
 var accDate = localStorage.getItem('SCROBBLEdate') || new Date().getTime();
 accDate = parseInt(accDate);
-// }).then(function(e) {
-	// console.log(e);
 console.log(accToken, accDate);
-	// var ref = new Date(e['date']);
 var ref = new Date(accDate);
-var check = new Date();
-check.setMonth(check.getMonth() - 2);
-var refreshNeeded = ref < check;
-console.log(ref, check, refreshNeeded);
+var checkDate = new Date();
+checkDate.setMonth(checkDate.getMonth() - 2);
+var refreshNeeded = ref < checkDate;
+console.log(ref, checkDate, refreshNeeded);
 if (accToken == false) {
 	auth();
 } else if (refreshNeeded) {
 	refreshToken();
 }
-// 	if (e['access_token'] == false) {
-// 		auth();
-// 	} else if (refreshNeeded) {
-// 		refresh();
-// 	}
-// })
 
 
-//https://api.trakt.tv/oauth/authorize?response_type=code&client_id=
 function auth() {
-	//var authlink = browser.identity.getRedirectURL();
 	var link = 'https://trakt.tv/oauth/authorize?response_type=code&client_id=36972228e7adee83436c7b32d4cac424cea0c030445512428c45508bf1c3e7dc&redirect_uri=https://turquoise-turtle.github.io/scrobble/auth.html';
 	location.href = link;
-	// var authorizing = browser.identity.launchWebAuthFlow({
-	// 	'url': link,
-	// 	'interactive': true
-	// })
-	// .then(function(url){
-	// 	var s = url.indexOf('?code=') + 6;
-	// 	var code = url.substring(s);
-
-	// 	var request = new XMLHttpRequest();
-	// 	request.open('POST', 'https://api.trakt.tv/oauth/token');
-	// 	request.setRequestHeader('Content-Type', 'application/json');
-	// 	request.onreadystatechange = function () {
-	// 		if (this.readyState === 4) {
-	// 			// console.log('Status:', this.status);
-	// 			// console.log('Headers:', this.getAllResponseHeaders());
-	// 			// console.log('Body:', this.responseText);
-	// 			var body = JSON.parse(this.responseText);
-	// 			console.log(body);
-	// 			let settingItem = browser.storage.local.set({
-	// 				'access_token': body['access_token'],
-	// 				'refresh_token': body['refresh_token'],
-	// 				'date': new Date().getTime()
-	// 			});
-	// 		}
-	// 	};
-	// 	var body = {
-	// 		'code': code,
-	// 		'client_id': 
-	// 		'client_secret': 
-	// 		'redirect_uri': authlink,
-	// 		'grant_type': 'authorization_code'
-	// 	};
-	// 	request.send(JSON.stringify(body));
-
-	// }).catch(console.warn)
 }
 
 
 
 function needsRefresh() {
 	var date = parseInt(localStorage.getItem('SCROBBLEdate'));
-	// return browser.storage.local.get(['date'])
-	// .then(function(s){
-		// var ref = new Date(s['date']);
 	var ref = new Date(date);
-	var check = new Date();
-	check.setMonth(check.getMonth() - 2);
-	console.log(ref, check);
-	if (ref < check) {
+	var checkDate = new Date();
+	checkDate.setMonth(checkDate.getMonth() - 2);
+	console.log(ref, checkDate);
+	if (ref < checkDate) {
 		return refreshToken()
 	} else {
 		console.log('no refresh needed')
@@ -90,9 +39,7 @@ function needsRefresh() {
 
 function refreshToken() {
 	console.log('refreshing token');
-	//return browser.storage.local.get(['refresh_token'])
 	var refToken = localStorage.getItem('SCROBBLErefresh_token');
-	// .then(function(s){
 	console.log(refToken)
 	var authlink = 'https://turquoise-turtle.github.io/scrobble/auth.html';
 	var request = new XMLHttpRequest();
@@ -109,11 +56,6 @@ function refreshToken() {
 			localStorage.setItem('SCROBBLEaccess_token', body['access_token']);
 			localStorage.setItem('SCROBBLErefresh_token', body['refresh_token']);
 			localStorage.setItem('SCROBBLEdate', new Date().getTime());
-			// let settingItem = browser.storage.local.set({
-			// 	'access_token': body['access_token'],
-			// 	'refresh_token': body['refresh_token'],
-			// 	'date': new Date().getTime()
-			// });
 		}
 	};
 
@@ -151,9 +93,6 @@ function searchshows(showtitle, movie) {
 
 	makeRequest('GET', url)//, obj, headers)
 	.then(function(responseText) {
-		//console.log('Status:', this.status);
-		//console.log('Headers:', this.getAllResponseHeaders());
-		//console.log('Body:', this.responseText);
 		var shows = JSON.parse(responseText);
 		console.log(shows)
 		var li = {};
