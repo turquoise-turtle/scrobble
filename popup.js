@@ -167,14 +167,7 @@ function initiateshow(show, movie) {
 	window.showid = show;
 	if (!movie) {
 		qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
-		
 		getnextep();
-		// browser.storage.local.get('access_token')
-		// .then(function(e){
-		// 	window.token = e['access_token'];
-		// 	window.showid = show;
-		// 	getnextep();
-		// });
 	} else {
 		qS('#showtitle').href = 'https://trakt.tv/movies/' + show;
 		loadMovie();
@@ -188,10 +181,6 @@ function getnextep() {
 	qS('#watchtick').classList.add('hide');
 	qS('#checkintick').classList.add('hide');
 	
-
-	// var headers = {
-		// 'Authorization': 'Bearer ' + window.token
-	// };
 	var headers = true;
 	var url = 'https://api.trakt.tv/shows/' + window.showid + '/progress/watched?hidden=false&specials=false&count_specials=false&last_activity=watched';
 	makeRequest('GET', url, headers)
@@ -224,77 +213,76 @@ function getnextep() {
 	}).then(loadEpisode);
 }
 function loadEpisode(currentepobj) {
-	//}).then(function (currentepobj){
-		console.log('got here', currentepobj)
+	
+	console.log('got here', currentepobj)
 
+	for (var actionel of document.getElementsByClassName('action')) {
+		actionel.classList.remove('hide');
+	}
+	qS('#scrobble').classList.remove('hide');
+
+	if (currentepobj == null) {
+		//no next episode
+		qS('#ep').style.display = "";
+		qS('#showtitle').classList.remove('hide');
+		qS('#eptitle').textContent = 'No Episodes Left';
 		for (var actionel of document.getElementsByClassName('action')) {
-			actionel.classList.remove('hide');
+			actionel.classList.add('hide');
 		}
-		qS('#scrobble').classList.remove('hide');
 
-		if (currentepobj == null) {
-			//no next episode
-			qS('#ep').style.display = "";
-			qS('#showtitle').classList.remove('hide');
-			qS('#eptitle').textContent = 'No Episodes Left';
-			for (var actionel of document.getElementsByClassName('action')) {
-				actionel.classList.add('hide');
-			}
+		qS('#scrobble').classList.add('hide');
+	} else {
+		var episodeids = currentepobj['ids'];
+		window.ids = episodeids;
+		window.currentepobj = currentepobj;
 
-			qS('#scrobble').classList.add('hide');
-		} else {
-			var episodeids = currentepobj['ids'];
-			window.ids = episodeids;
-			window.currentepobj = currentepobj;
+		var eptitle = currentepobj['title'];
+		var epPos = 's' + currentepobj['season'] + 'e' + currentepobj['number'];
+		qS('#epnum').textContent = epPos + ': ';
+		qS('#eptitle').textContent = eptitle;
+		qS('#ep').style.display = "";
+		
+		qS('#loadingtext').classList.add('hide');
+		qS('#showtitle').classList.remove('hide');
+		qS('#epnum').classList.remove('hide');
+		qS('#eptitle').classList.remove('hide');
+		qS('#watchdonut').classList.add('hide');
+		qS('#checkindonut').classList.add('hide');
+		qS('#watchcheck').classList.remove('hide');
+		qS('#checkincheck').classList.remove('hide');
+		
+		qS('#watch').addEventListener('click', watch);
+		qS('#watchcheck').addEventListener('click', watch);
+		qS('#check').addEventListener('click', check);
+		qS('#checkincheck').addEventListener('click', check);
 
-			var eptitle = currentepobj['title'];
-			var epPos = 's' + currentepobj['season'] + 'e' + currentepobj['number'];
-			qS('#epnum').textContent = epPos + ': ';
-			qS('#eptitle').textContent = eptitle;
-			qS('#ep').style.display = "";
-			
-			qS('#loadingtext').classList.add('hide');
-			qS('#showtitle').classList.remove('hide');
-			qS('#epnum').classList.remove('hide');
-			qS('#eptitle').classList.remove('hide');
-			qS('#watchdonut').classList.add('hide');
-			qS('#checkindonut').classList.add('hide');
-			qS('#watchcheck').classList.remove('hide');
-			qS('#checkincheck').classList.remove('hide');
-			
-			qS('#watch').addEventListener('click', watch);
-			qS('#watchcheck').addEventListener('click', watch);
-			qS('#check').addEventListener('click', check);
-			qS('#checkincheck').addEventListener('click', check);
-
-			//show scrobble bar?
-			
-			if (currentepobj.runtime == null) {
-				var headers = {
-					'Authorization': 'Bearer ' + window.token
-				};
-				var url = 'https://api.trakt.tv/shows/' + window.showid + '/seasons/' + currentepobj['season'] + '/episodes/' + currentepobj['number'] + '?extended=full';
-				makeRequest('GET', url, headers)
-				.then(function (responseText) {
-					var body = JSON.parse(responseText);
-					window.currentepobj = body;
-					var runtime = body['runtime'];
-					var runtimes = runtime * 60;
-					qS('#scrobbleslider').max = runtimes;
-					qS('#totalTime').innerText = runtime + ':00';
-					qS('#scrobbleslider').value = 0;
-					qS('#scrobbleTime').innerText = '0:00';
-				});
-			} else {
-				var runtime = currentepobj['runtime'];
+		//show scrobble bar?
+		
+		if (currentepobj.runtime == null) {
+			var headers = {
+				'Authorization': 'Bearer ' + window.token
+			};
+			var url = 'https://api.trakt.tv/shows/' + window.showid + '/seasons/' + currentepobj['season'] + '/episodes/' + currentepobj['number'] + '?extended=full';
+			makeRequest('GET', url, headers)
+			.then(function (responseText) {
+				var body = JSON.parse(responseText);
+				window.currentepobj = body;
+				var runtime = body['runtime'];
 				var runtimes = runtime * 60;
 				qS('#scrobbleslider').max = runtimes;
 				qS('#totalTime').innerText = runtime + ':00';
 				qS('#scrobbleslider').value = 0;
-				qS('#scrobbleTime').innerText = '00:00';
-			}
+				qS('#scrobbleTime').innerText = '0:00';
+			});
+		} else {
+			var runtime = currentepobj['runtime'];
+			var runtimes = runtime * 60;
+			qS('#scrobbleslider').max = runtimes;
+			qS('#totalTime').innerText = runtime + ':00';
+			qS('#scrobbleslider').value = 0;
+			qS('#scrobbleTime').innerText = '00:00';
 		}
-	//});
+	}
 
 }
 function getnexteprewatch(slug, resetdate, seasons) {
@@ -377,11 +365,6 @@ function loadMovie() {
 	});
 }
 
-// watch = console.log;
-// check = console.log;
-
-// console.log(qS('#eptitle'))
-// console.log(qS('#watch'))
 
 function watch() {
 	var ep = window.ids;
@@ -454,10 +437,6 @@ function check() {
 		console.log(body);
 		qS('#checkindonut').classList.add('hide');
 		qS('#checkintick').classList.remove('hide');
-		setTimeout(function() {
-			window.close();
-		}, 1000);
-		// refresh();
 	});
 }
 
@@ -569,25 +548,6 @@ function makeRequest (method, url, headers, obj) {
 
 
 
-function progressUpdate() {
-	browser.tabs.query({currentWindow: true, active: true})
-	.then(function(t) {
-		//console.log(t);
-		var id = t[0]['id'];
-		// console.log(id);
-		return browser.tabs.sendMessage(id, {'type':'progress'});
-	}).then(function(msg) {
-		console.log(msg);
-		if (msg['valid']) {
-			// searchshows(msg['show'])
-			qS('#pr').textContent = msg['progress'] + '%';
-			qS('#progress').style.display = '';
-		}
-	}).catch(console.warn);
-}
-//qS('#pbtn').addEventListener('click', progressUpdate);
-
-
 function lbSearchHandler() {
 	var value = qS('#showtosearch').value;
 	console.log('letterboxd ' + encodeURIComponent(value));
@@ -598,69 +558,35 @@ qS('#lbBtn').addEventListener('click', lbSearchHandler);
 
 var params = new URLSearchParams(document.location.search.substring(1));
 var separate = params.get("separate");
-// if (separate != null) {
-	separate = true;
-	qS('#lbBtn').classList.remove('hide');
-	// qS('#scrobble').classList.remove('hide');
-	qS('body').classList.add('separate');
-	qS('#scrobbleTime').innerText = '0:00';
-	qS('#totalTime').innerText = '0:00';
-	qS('#scrobbleslider').oninput = function() {
-		var runtime = this.value;
-		var hours = Math.floor(runtime / 3600);
-		runtime = runtime - hours * 3600;
-		var minutes = Math.floor(runtime / 60);
-		runtime = runtime - minutes * 60;
-		var seconds = runtime;
-		// var seconds = runtime % 60;
-		// var minutes = runtime % 3600;
-		// var hours = runtime % 216000;
-		hours = (hours > 0 ? hours + ':' : '');
-		minutes = (minutes < 10 ? '0' : '') + minutes + ':';
-		seconds = (seconds < 10 ? '0' : '') + seconds;
-		// var minutes = Math.floor(this.value / 60);
-		//var text = minutes + ':' + seconds;
-		var text = hours + minutes + seconds;
-		qS('#scrobbleTime').innerText = text;
-	}
-	var title = params.get('title') || '';
-	searchbox(title);
 
-	qS('#play').addEventListener('click', sPlay);
-	qS('#pause').addEventListener('click', sPause);
-	qS('#stop').addEventListener('click', sStop);
-
+separate = true;
+qS('#lbBtn').classList.remove('hide');
+// qS('#scrobble').classList.remove('hide');
+qS('body').classList.add('separate');
+qS('#scrobbleTime').innerText = '0:00';
+qS('#totalTime').innerText = '0:00';
+qS('#scrobbleslider').oninput = function() {
+	var runtime = this.value;
+	var hours = Math.floor(runtime / 3600);
+	runtime = runtime - hours * 3600;
+	var minutes = Math.floor(runtime / 60);
+	runtime = runtime - minutes * 60;
+	var seconds = runtime;
 	
-// } else {
-// 	separate = false;
-// 	qS('#ozshows').addEventListener('click', function(e){
-// 		window.open(location.href + '?separate=true&title=' + currentTab.title);
-// 	});
+	hours = (hours > 0 ? hours + ':' : '');
+	minutes = (minutes < 10 ? '0' : '') + minutes + ':';
+	seconds = (seconds < 10 ? '0' : '') + seconds;
+	
+	var text = hours + minutes + seconds;
+	qS('#scrobbleTime').innerText = text;
+}
+var title = params.get('title') || '';
+searchbox(title);
 
-// 	var currentTab;
-// 	browser.tabs.query({currentWindow: true, active: true})
-// 	.then(function(t) {
-// 		currentTab = t[0];
-// 		//console.log(t);
-// 		var id = t[0]['id'];
-// 		console.log(id, t);
-// 		return browser.tabs.sendMessage(id, {'type':'show'});
-// 	}).then(function(msg) {
-// 		console.log(msg);
-// 		if (msg['valid']) {
-// 			searchshows(msg['show'])
-// 		}
-// 		//return browser.tabs.query({currentWindow: true, active: true})
-// 	//}).then(function(t) {
-// 		//var id = t[0]['id'];
-// 		// console.log(id);
-// 		//return browser.tabs.sendMessage(id, {'type':'scrobble'});
-// 	}).catch(function(err){
-// 		//no content script in current page
-// 		console.log('no content script', currentTab)
-// 		searchbox(currentTab.title);
-// 	});
-// }
+qS('#play').addEventListener('click', sPlay);
+qS('#pause').addEventListener('click', sPause);
+qS('#stop').addEventListener('click', sStop);
+
 
 function sPlay() {
 	sScrobble('start')
@@ -683,6 +609,10 @@ function sStop(){
 	})
 }
 function sScrobble(action, progress) {
+	for (var actionel of document.getElementsByClassName('action')) {
+		actionel.classList.add('hide');
+	}
+
 	console.log(window.ids);
 	
 	var ep = window.ids;
