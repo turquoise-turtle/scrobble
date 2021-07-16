@@ -46,7 +46,7 @@ a:hover {
 /* } */
 
 .below {
-	margin-bottom: 2em;
+	margin-bottom: 1.5em !important;
 }
 
 /* https://www.30secondsofcode.org/css/s/donut-spinner */

@@ -287,6 +287,12 @@ function getnextep() {
 function loadEpisode(currentepobj) {
 	//}).then(function (currentepobj){
 		console.log('got here', currentepobj)
+
+		for (var actionel of document.getElementsByClassName('action')) {
+			actionel.classList.remove('hide');
+		}
+		qS('#scrobble').classList.remove('hide');
+
 		if (currentepobj == null) {
 			//no next episode
 			qS('#ep').style.display = "";
@@ -346,7 +352,7 @@ function loadEpisode(currentepobj) {
 				qS('#scrobbleslider').max = runtimes;
 				qS('#totalTime').innerText = runtime + ':00';
 				qS('#scrobbleslider').value = 0;
-				qS('#scrobbleTime').innerText = '0:00';
+				qS('#scrobbleTime').innerText = '00:00';
 			}
 		}
 	//});
