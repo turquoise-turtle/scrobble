@@ -701,3 +701,11 @@ function initiateSelect() {
 	showedSeasons = true;
 	qS('#episodeSelectBox').classList.remove('hide');
 }
+
+
+qS('#logout').addEventListener('click', function(e){
+	localStorage.removeItem('SCROBBLEaccess_token');
+	localStorage.removeItem('SCROBBLErefresh_token');
+	localStorage.removeItem('SCROBBLEdate');
+	location.reload();
+})
