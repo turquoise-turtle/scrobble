@@ -182,7 +182,7 @@ function getnextep() {
 	qS('#checkintick').classList.add('hide');
 	
 	var headers = true;
-	var url = 'https://api.trakt.tv/shows/' + window.showid + '/progress/watched?hidden=false&specials=true&count_specials=false&last_activity=watched';
+	var url = 'https://api.trakt.tv/shows/' + window.showid + '/progress/watched?hidden=false&specials=false&count_specials=false&last_activity=watched';
 	makeRequest('GET', url, headers)
 	.then(function (responseText) {
 		var body = JSON.parse(responseText);
