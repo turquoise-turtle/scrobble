@@ -182,7 +182,12 @@ function getnextep() {
 	qS('#checkintick').classList.add('hide');
 	
 	var headers = true;
-	var url = 'https://api.trakt.tv/shows/' + window.showid + '/progress/watched?hidden=false&specials=false&count_specials=false&last_activity=watched';
+	if (qS('#showSpecials').checked) {
+		var spec = 'true';
+	} else {
+		spec = 'false';
+	}
+	var url = 'https://api.trakt.tv/shows/' + window.showid + '/progress/watched?hidden=false&specials=' + spec + '&count_specials=false&last_activity=watched';
 	makeRequest('GET', url, headers)
 	.then(function (responseText) {
 		var body = JSON.parse(responseText);
