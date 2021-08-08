@@ -255,6 +255,7 @@ function loadEpisode(currentepobj) {
 		qS('#checkindonut').classList.add('hide');
 		qS('#watchcheck').classList.remove('hide');
 		qS('#checkincheck').classList.remove('hide');
+		qS('#scrobble').classList.remove('hide');
 		
 		qS('#watch').addEventListener('click', watch);
 		qS('#watchcheck').addEventListener('click', watch);
@@ -348,6 +349,7 @@ function loadMovie() {
 			qS('#checkindonut').classList.add('hide');
 			qS('#watchcheck').classList.remove('hide');
 			qS('#checkincheck').classList.remove('hide');
+			qS('#scrobble').classList.remove('hide');
 			
 			qS('#watch').addEventListener('click', watch);
 			qS('#watchcheck').addEventListener('click', watch);
@@ -459,6 +461,7 @@ function refresh() {
 		qS('#checkindonut').classList.remove('hide');
 		qS('#watchcheck').classList.add('hide');
 		qS('#watchdonut').classList.remove('hide');
+		qS('#scrobble').classList.add('hide');
 
 		qS('#epnum').classList.add('hide');
 		qS('#showtitle').classList.add('hide');
