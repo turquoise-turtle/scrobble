@@ -475,7 +475,7 @@ function searchbox(pagetitle) {
 	if (hasSearched) {
 		qS('#refine').classList.remove('hide');
 		qS('#searchdonut').classList.add('hide');
-		qS('#searchbtn').classList.remove('hide');
+		qS('#searchButtons').classList.remove('hide');
 	} else {
 		qS('#showtosearch').value = pagetitle;
 		qS('#searchbtn').addEventListener('click', handlesearchbox)
@@ -497,7 +497,7 @@ function handlesearchbox() {
 	var value = qS('#showtosearch').value;
 	searchshows(value);
 	qS('#searchdonut').classList.remove('hide');
-	qS('#searchbtn').classList.add('hide');
+	qS('#searchButtons').classList.add('hide');
 	// qS('#searchshow').classList.add('hide');
 }
 function handleMovieSearch() {
@@ -505,7 +505,7 @@ function handleMovieSearch() {
 	var value = qS('#showtosearch').value;
 	
 	qS('#searchdonut').classList.remove('hide');
-	qS('#searchbtn').classList.add('hide');
+	qS('#searchButtons').classList.add('hide');
 
 	searchshows(value, true);
 }
