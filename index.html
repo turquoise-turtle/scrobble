@@ -8,23 +8,27 @@
 <section id="searchshow" class="hide">
 	<h4>Search show</h4>
 	<input id="showtosearch">
-	<button id="searchbtn">TV Search</button>
-	<div id="searchdonut" class="donut hide"></div>
-	<button id="movieBtn">Movie Search</button>
-	<button class="hide" id="lbBtn">LB</button>
-
-	<input type="checkbox" id="showSpecials" name="showSpecials">
-	<label for="showSpecials">Specials?</label>
 	
+	<div id="searchButtons">
+		<button id="searchbtn" class="button">TV Search</button>
+		<button id="movieBtn" class="button">Movie Search</button>
+		<button class="button" id="lbBtn">LB</button>
+	
+
+		<input type="checkbox" id="showSpecials" name="showSpecials">
+		<label for="showSpecials">Specials?</label>
+	</div>
+	
+	<div id="searchdonut" class="donut hide"></div>
 	<h4 id="refine" class="hide">Please refine your search query</h4>
 </section>
 
 <!-- <h3 id="notfound" class="hide">Could Not Find A Show On The Current Page</h3> -->
 
 <section id="episodeSelectBox" class="hide">
-	<select id="seasonSelect"></select>
-	<select id="episodeSelect"></select>
-	<button id="episodeSelectBtn">Select</button>
+	<select id="seasonSelect" class="button"></select>
+	<select id="episodeSelect" class="button"></select>
+	<button id="episodeSelectBtn" class="button">Select</button>
 </section>
 
 <section id="ep" style="display: none">
@@ -47,8 +51,8 @@
 
 <section id="selectshows" style="display: none">
 	<h3>Select the right show:</h3>
-	<select id="sel" name="show"></select>
-	<button id="btn">Select</button>
+	<select id="sel" name="show" class="button"></select>
+	<button id="btn" class="button">Select</button>
 </section>
 
 <section id="scrobble" class="hide">
@@ -58,9 +62,9 @@
 	</div>
 	<div class="scrobbleButtons">
 		<h4><span id="scrobbleTime"></span>/<span id="totalTime"></span></h4>
-		<button id="play">Play</button>
-		<button id="pause">Pause</button>
-		<button id="stop">Finished?</button>
+		<button id="play" class="button">Play</button>
+		<button id="pause" class="button">Pause</button>
+		<button id="stop" class="button">Finished?</button>
 	</div>
 	<div id="stopReminder" class="hide">
 		<h4>Remember to click "Finished?" when you have completed the episode</h4>
