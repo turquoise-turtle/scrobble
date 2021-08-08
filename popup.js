@@ -255,7 +255,7 @@ function loadEpisode(currentepobj) {
 		qS('#checkindonut').classList.add('hide');
 		qS('#watchcheck').classList.remove('hide');
 		qS('#checkincheck').classList.remove('hide');
-		qS('#scrobble').classList.remove('hide');
+		
 		
 		qS('#watch').addEventListener('click', watch);
 		qS('#watchcheck').addEventListener('click', watch);
@@ -279,6 +279,7 @@ function loadEpisode(currentepobj) {
 				qS('#totalTime').innerText = runtime + ':00';
 				qS('#scrobbleslider').value = 0;
 				qS('#scrobbleTime').innerText = '0:00';
+				qS('#scrobble').classList.remove('hide');
 			});
 		} else {
 			var runtime = currentepobj['runtime'];
@@ -287,6 +288,7 @@ function loadEpisode(currentepobj) {
 			qS('#totalTime').innerText = runtime + ':00';
 			qS('#scrobbleslider').value = 0;
 			qS('#scrobbleTime').innerText = '00:00';
+			qS('#scrobble').classList.remove('hide');
 		}
 	}
 

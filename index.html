@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="popup.css">
 <title>QuickScrobble</title>
 
+<body class="pushbutton">
 <h4 id="ozshows">QuickScrobble</h4>
 
 <section id="searchshow" class="hide">
@@ -14,9 +15,10 @@
 		<button id="movieBtn" class="pushbutton">Movie Search</button>
 		<button class="pushbutton" id="lbBtn">LB</button>
 	
-
-		<input type="checkbox" id="showSpecials" name="showSpecials">
-		<label for="showSpecials">Specials?</label>
+		<div class="pushbutton" style="display: inline-block">
+			<input type="checkbox" id="showSpecials" name="showSpecials">
+			<label for="showSpecials">Specials?</label>
+		</div>
 	</div>
 	
 	<div id="searchdonut" class="donut hide"></div>
@@ -84,3 +86,4 @@
 </section>
 
 <script src="popup.js"></script>
+</body>
