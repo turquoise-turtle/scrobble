@@ -174,7 +174,7 @@ function initiateshow(show, movie) {
 	}
 	
 	
-	qS('#scrobble').classList.remove('hide');
+	// qS('#scrobble').classList.remove('hide');
 }
 function getnextep() {
 	console.log('getnextep');
