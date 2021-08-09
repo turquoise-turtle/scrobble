@@ -698,6 +698,7 @@ function initiateSelect() {
 			qS('#episodeSelect').appendChild(o);
 		}
 	qS('#episodeSelectBtn').addEventListener('click', function(){
+		qS('#loadobject').classList.remove('hide');
 		var season = qS('#seasonSelect').value;
 		var episode = qS('#episodeSelect').value;
 		var headers = {
