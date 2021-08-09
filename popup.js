@@ -224,7 +224,7 @@ function loadEpisode(currentepobj) {
 	for (var actionel of document.getElementsByClassName('action')) {
 		actionel.classList.remove('hide');
 	}
-	qS('#scrobble').classList.remove('hide');
+	
 
 	if (currentepobj == null) {
 		//no next episode
