@@ -10,6 +10,9 @@ body.separate {
 	text-align: center;
 	cursor: auto;
 }
+input, button, textarea, select {
+	font: inherit;
+}
 
 a {
 	color: black;
@@ -73,13 +76,16 @@ a:hover {
 	width: 16px;
 	height: 16px;
 	animation: donut-spin 1.2s linear infinite;
+
+	margin-top: -5px;
+	vertical-align: middle;
 }
 
-.donutcontainer {
+/* .donutcontainer {
 	margin-top: -5px;
 	transform: translateY(5px);
 	display: inline-block;
-}
+} */
 
 /* https://usefulangle.com/post/236/css-checkmark-tick */
 .tick-mark {
@@ -128,7 +134,7 @@ a:hover {
 	-webkit-user-select: none;
 	touch-action: manipulation;
 	background-color: white;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	/* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial, sans-serif; */
 	font-size: 16px;
 	margin-right: 8px;
 	margin-bottom: 16px;
@@ -142,3 +148,11 @@ button.pushbutton:active, div.pushbutton:active {
 /* .pushbutton ~ .pushbutton {
 	margin-left: 8px;
 } */
+
+#meta {
+	margin-top: 5em;
+}
+
+#loadobject {
+	margin-bottom: 16px;
+}

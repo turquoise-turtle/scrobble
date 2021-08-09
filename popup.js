@@ -162,6 +162,8 @@ function showlist(list, years, movie) {
 }
 
 function initiateshow(show, movie) {
+	qS('#loadobject').classList.remove('hide');
+
 	movie = movie || false;
 	window.token = localStorage.getItem('SCROBBLEaccess_token');
 	window.showid = show;
@@ -218,7 +220,7 @@ function getnextep() {
 	}).then(loadEpisode);
 }
 function loadEpisode(currentepobj) {
-	
+	qS('#loadobject').classList.add('hide');
 	console.log('got here', currentepobj)
 
 	for (var actionel of document.getElementsByClassName('action')) {
@@ -235,6 +237,8 @@ function loadEpisode(currentepobj) {
 			actionel.classList.add('hide');
 		}
 
+		qS('#loadingtext').classList.add('hide');
+		qS('#eptitle').classList.remove('hide');
 		qS('#scrobble').classList.add('hide');
 	} else {
 		var episodeids = currentepobj['ids'];
@@ -258,9 +262,9 @@ function loadEpisode(currentepobj) {
 		
 		
 		qS('#watch').addEventListener('click', watch);
-		qS('#watchcheck').addEventListener('click', watch);
+		// qS('#watchcheck').addEventListener('click', watch);
 		qS('#check').addEventListener('click', check);
-		qS('#checkincheck').addEventListener('click', check);
+		// qS('#checkincheck').addEventListener('click', check);
 
 		//show scrobble bar?
 		
@@ -332,6 +336,8 @@ function loadMovie() {
 	var url = 'https://api.trakt.tv/movies/' + window.showid + '?extended=full';
 	makeRequest('GET', url, headers)
 	.then(function (responseText) {
+		qS('#loadobject').classList.add('hide');
+
 		var body = JSON.parse(responseText);
 		console.log(body);
 		window.movieobj = body;
@@ -354,9 +360,9 @@ function loadMovie() {
 			qS('#scrobble').classList.remove('hide');
 			
 			qS('#watch').addEventListener('click', watch);
-			qS('#watchcheck').addEventListener('click', watch);
+			// qS('#watchcheck').addEventListener('click', watch);
 			qS('#check').addEventListener('click', check);
-			qS('#checkincheck').addEventListener('click', check);
+			// qS('#checkincheck').addEventListener('click', check);
 			var runtime = movieobj['runtime'];
 			var runtimes = runtime * 60;
 			var hours = Math.floor(runtime / 60);
@@ -451,9 +457,9 @@ function check() {
 
 function refresh() {
 	qS('#watch').removeEventListener('click', watch);
-	qS('#watchcheck').removeEventListener('click', watch);
+	// qS('#watchcheck').removeEventListener('click', watch);
 	qS('#check').removeEventListener('click', check);
-	qS('#checkincheck').removeEventListener('click', check);
+	// qS('#checkincheck').removeEventListener('click', check);
 
 	qS('#watchcheck').checked = false;
 	qS('#checkincheck').checked = false;
