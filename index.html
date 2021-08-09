@@ -15,13 +15,15 @@
 		<button id="movieBtn" class="pushbutton">Movie Search</button>
 		<button class="pushbutton" id="lbBtn">LB</button>
 	
-		<div class="pushbutton" style="display: inline-block">
-			<input type="checkbox" id="showSpecials" name="showSpecials">
-			<label for="showSpecials">Specials?</label>
-		</div>
+		<label for="showSpecials">
+			<div class="pushbutton" style="display: inline-block">
+				<input type="checkbox" id="showSpecials" name="showSpecials">
+				Specials?
+			</div>
+		</label>
 	</div>
 	
-	<div id="searchdonut" class="donut hide"></div>
+	<div class="donutcontainer"><div id="searchdonut" class="donut hide"></div></div>
 	<h4 id="refine" class="hide">Please refine your search query</h4>
 </section>
 
@@ -35,19 +37,27 @@
 
 <section id="ep" style="display: none">
 	<h3><span id="loadingtext" class="hide">Loading ...</span><a id="showtitle" target="_blank"></a> <span id="epnum"></span><span id="eptitle"></span></h3>
-	<h4 class="action below">
-		<label for="watchcheck"><a id="watch" href="#">Watched?</a></label>
-		<input id="watchcheck" type="checkbox">
-		<div id="watchdonut" class="donut hide"></div>
-		<div id="watchtick" class="tick-mark hide"></div>
-	</h4>
+	<div class="action below">
+		<label for="watchcheck" id="watch">
+			<div class="pushbutton">
+				<h4 class="inline">Watched?</h4>
+				<input id="watchcheck" type="checkbox">
+				<div class="donutcontainer"><div id="watchdonut" class="donut hide"></div></div>
+				<div id="watchtick" class="tick-mark hide"></div>
+			</div>
+		</label>
+	</div>
 	<!-- <br> -->
-	<h4 class="action">
-		<label for="checkincheck"><a id="check" href="#">Check in</a></label>
-		<input id="checkincheck" type="checkbox">
-		<div id="checkindonut" class="donut hide"></div>
-		<div id="checkintick" class="tick-mark hide"></div>
-	</h4>
+	<div class="action">
+		<label for="watchcheck" id="watch">
+			<div class="pushbutton">
+				<h4 class="inline">Check in:</h4>
+				<input id="checkincheck" type="checkbox">
+				<div class="donutcontainer"><div id="checkindonut" class="donut hide"></div></div>
+				<div id="checkintick" class="tick-mark hide"></div>
+			</div>
+		</label>
+	</div>
 	
 </section>
 
