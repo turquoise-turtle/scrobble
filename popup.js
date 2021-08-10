@@ -261,9 +261,9 @@ function loadEpisode(currentepobj) {
 		qS('#checkincheck').classList.remove('hide');
 		
 		
-		qS('#watch').addEventListener('click', watch);
+		qS('#watch').addEventListener('click', watch, {once: true});
 		// qS('#watchcheck').addEventListener('click', watch);
-		qS('#check').addEventListener('click', check);
+		qS('#check').addEventListener('click', check, {once: true});
 		// qS('#checkincheck').addEventListener('click', check);
 
 		//show scrobble bar?
@@ -359,9 +359,9 @@ function loadMovie() {
 			qS('#checkincheck').classList.remove('hide');
 			qS('#scrobble').classList.remove('hide');
 			
-			qS('#watch').addEventListener('click', watch);
+			qS('#watch').addEventListener('click', watch, {once: true});
 			// qS('#watchcheck').addEventListener('click', watch);
-			qS('#check').addEventListener('click', check);
+			qS('#check').addEventListener('click', check, {once: true});
 			// qS('#checkincheck').addEventListener('click', check);
 			var runtime = movieobj['runtime'];
 			var runtimes = runtime * 60;
