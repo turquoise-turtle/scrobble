@@ -382,6 +382,7 @@ function loadMovie() {
 
 
 function watch() {
+	console.log(currentepobj);
 	var ep = window.ids;
 	//loading spinner?
 	qS('#watchcheck').classList.add('hide');
@@ -680,7 +681,8 @@ function initiateSelect() {
 	}
 	qS('#seasonSelect').addEventListener('change', function(e){
 		var number = parseInt(e.target.options[e.target.options.selectedIndex].dataset.episodes) + 1;
-		qS('#episodeSelect').innerHTML = '';
+		qS('#episodeSelect').innerHTML = '<option disabled selected value="ZZZ">Episode #</option>';
+		//add default episode
 		for (var i = 1; i < number; i++) {
 			var o = document.createElement('option');
 			o.value = i;
@@ -688,6 +690,7 @@ function initiateSelect() {
 			qS('#episodeSelect').appendChild(o);
 		}
 	});
+	/*
 		qS('#seasonSelect').selectedIndex = 0;
 		var number = parseInt(qS('#seasonSelect').options[0].dataset.episodes) + 1;
 		qS('#episodeSelect').innerHTML = '';
@@ -697,20 +700,24 @@ function initiateSelect() {
 			o.innerText = i;
 			qS('#episodeSelect').appendChild(o);
 		}
+	*/
 	qS('#episodeSelectBtn').addEventListener('click', function(){
-		qS('#loadobject').classList.remove('hide');
 		var season = qS('#seasonSelect').value;
 		var episode = qS('#episodeSelect').value;
-		var headers = {
-			'Authorization': 'Bearer ' + window.token
-		};
-		var url = 'https://api.trakt.tv/shows/' + window.showid + '/seasons/' + season + '/episodes/' + episode + '?extended=full';
-		makeRequest('GET', url, headers)
-		.then(function (responseText) {
-			var body = JSON.parse(responseText);
-			window.currentepobj = body;
-			return body;
-		}).then(loadEpisode);
+		if (season != 'ZZZ' && episode != 'ZZZ') {
+			qS('#loadobject').classList.remove('hide');
+			
+			var headers = {
+				'Authorization': 'Bearer ' + window.token
+			};
+			var url = 'https://api.trakt.tv/shows/' + window.showid + '/seasons/' + season + '/episodes/' + episode + '?extended=full';
+			makeRequest('GET', url, headers)
+			.then(function (responseText) {
+				var body = JSON.parse(responseText);
+				window.currentepobj = body;
+				return body;
+			}).then(loadEpisode);
+		}
 	});
 	
 	
