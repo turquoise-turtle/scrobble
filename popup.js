@@ -205,7 +205,7 @@ function getnextep() {
 		//promisify this
 		return new Promise(function(resolve, reject) {
 			console.log('promise here')
-			if (body['next_episode'] != null) {
+			if (body['next_episode'] != null && body['aired'] != body['completed']) {
 				var currentepobj = body['next_episode'];
 				resolve(currentepobj);
 			} else if (body['reset_at'] != null) {
@@ -300,6 +300,7 @@ function loadEpisode(currentepobj) {
 function getnexteprewatch(slug, resetdate, seasons) {
 	console.log('getnexteprewatch')
 	var fullep = null;
+	dance:
 	for (var season of seasons) {
 		for (var ep of season['episodes']) {
 			if (ep['last_watched_at'] < resetdate) {
@@ -309,7 +310,7 @@ function getnexteprewatch(slug, resetdate, seasons) {
 				//set season number and episode number here
 
 				console.log(season, ep);
-				break;
+				break dance;
 			} else {
 				console.log('not it')
 			}
