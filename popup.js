@@ -223,6 +223,9 @@ function loadEpisode(currentepobj) {
 	qS('#loadobject').classList.add('hide');
 	console.log('got here', currentepobj)
 
+	qS('#watchcheck').checked = false;
+	qS('#checkincheck').checked = false;
+
 	for (var actionel of document.getElementsByClassName('action')) {
 		actionel.classList.remove('hide');
 	}
@@ -259,6 +262,8 @@ function loadEpisode(currentepobj) {
 		qS('#checkindonut').classList.add('hide');
 		qS('#watchcheck').classList.remove('hide');
 		qS('#checkincheck').classList.remove('hide');
+		qS('#checkintick').classList.add('hide');
+		qS('#watchtick').classList.add('hide');
 		
 		
 		qS('#watch').addEventListener('click', watch, {once: true});
