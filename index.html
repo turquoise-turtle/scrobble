@@ -4,105 +4,105 @@
 <title>QuickScrobble</title>
 
 <body class="pushbutton">
-<h4 id="ozshows"><a href="/scrobble/">QuickScrobble</a></h4>
+	<h4 id="ozshows"><a href="/scrobble/">QuickScrobble</a></h4>
 
-<section id="searchshow" class="hide">
-	<h4>Search show</h4>
-	<input id="showtosearch" enterkeyhint="search" type="search">
-	
-	<div id="searchButtons">
-		<button id="searchbtn" class="pushbutton">TV Search</button>
-		<button id="movieBtn" class="pushbutton">Movie Search</button>
-		<button class="pushbutton" id="lbBtn">LB</button>
-	
-		<label for="showSpecials">
-			<div class="pushbutton" style="display: inline-block">
-				<input type="checkbox" id="showSpecials" name="showSpecials">
-				Specials?
-			</div>
-		</label>
-	</div>
-	
-	<div id="searchdonut" class="donut hide"></div>
-	<h4 id="refine" class="hide">Please refine your search query</h4>
-</section>
+	<section id="searchshow" class="hide">
+		<h4>Search show</h4>
+		<input id="showtosearch" enterkeyhint="search" type="search">
+		
+		<div id="searchButtons">
+			<button id="searchbtn" class="pushbutton">TV Search</button>
+			<button id="movieBtn" class="pushbutton">Movie Search</button>
+			<button class="pushbutton" id="lbBtn">LB</button>
+		
+			<label for="showSpecials">
+				<div class="pushbutton" style="display: inline-block">
+					<input type="checkbox" id="showSpecials" name="showSpecials">
+					Specials?
+				</div>
+			</label>
+		</div>
+		
+		<div id="searchdonut" class="donut hide"></div>
+		<h4 id="refine" class="hide">Please refine your search query</h4>
+	</section>
 
-<!-- <h3 id="notfound" class="hide">Could Not Find A Show On The Current Page</h3> -->
+	<!-- <h3 id="notfound" class="hide">Could Not Find A Show On The Current Page</h3> -->
 
-<section id="episodeSelectBox" class="hide">
-	<select id="seasonSelect" class="pushbutton">
-		<option disabled selected value="ZZZ">Season #</option>
-	</select>
-	<select id="episodeSelect" class="pushbutton">
-		<option disabled selected value="ZZZ">Episode #</option>
-	</select>
-	<button id="episodeSelectBtn" class="pushbutton">Select</button>
-</section>
+	<section id="episodeSelectBox" class="hide">
+		<select id="seasonSelect" class="pushbutton">
+			<option disabled selected value="ZZZ">Season #</option>
+		</select>
+		<select id="episodeSelect" class="pushbutton">
+			<option disabled selected value="ZZZ">Episode #</option>
+		</select>
+		<button id="episodeSelectBtn" class="pushbutton">Select</button>
+	</section>
 
-<section id="loadobject" class="hide">
-	<h3 class="inline">Loading ...</h3>
-	<div class="donut"></div>
-</section>
+	<section id="loadobject" class="hide">
+		<h3 class="inline">Loading ...</h3>
+		<div class="donut"></div>
+	</section>
 
-<section id="ep" style="display: none">
-	<h3><span id="loadingtext" class="hide">Loading ...</span><a id="showtitle" target="_blank"></a> <span id="epnum"></span><span id="eptitle"></span></h3>
-	<div class="action below">
-		<label for="watchcheck" id="watch">
-			<div class="pushbutton">
-				<h4 class="inline">Watched?</h4>
-				<input id="watchcheck" type="checkbox">
-				<div id="watchdonut" class="donut hide"></div>
-				<div id="watchtick" class="tick-mark hide"></div>
-			</div>
-		</label>
-	</div>
-	<!-- <br> -->
-	<div class="action">
-		<label for="watchcheck" id="check">
-			<div class="pushbutton">
-				<h4 class="inline">Check in:</h4>
-				<input id="checkincheck" type="checkbox">
-				<div id="checkindonut" class="donut hide"></div>
-				<div id="checkintick" class="tick-mark hide"></div>
-			</div>
-		</label>
-	</div>
-	
-</section>
+	<section id="ep" style="display: none">
+		<h3><span id="loadingtext" class="hide">Loading ...</span><a id="showtitle" target="_blank"></a> <span id="epnum"></span><span id="eptitle"></span></h3>
+		<div class="action below">
+			<label for="watchcheck" id="watch">
+				<div class="pushbutton">
+					<h4 class="inline">Watched?</h4>
+					<input id="watchcheck" type="checkbox">
+					<div id="watchdonut" class="donut hide"></div>
+					<div id="watchtick" class="tick-mark hide"></div>
+				</div>
+			</label>
+		</div>
+		<!-- <br> -->
+		<div class="action">
+			<label for="checkincheck" id="check">
+				<div class="pushbutton">
+					<h4 class="inline">Check in:</h4>
+					<input id="checkincheck" type="checkbox">
+					<div id="checkindonut" class="donut hide"></div>
+					<div id="checkintick" class="tick-mark hide"></div>
+				</div>
+			</label>
+		</div>
+		
+	</section>
 
-<section id="selectshows" style="display: none">
-	<h3>Select the right show:</h3>
-	<select id="sel" name="show" class="pushbutton"></select>
-	<button id="btn" class="pushbutton">Select</button>
-</section>
+	<section id="selectshows" style="display: none">
+		<h3>Select the right show:</h3>
+		<select id="sel" name="show" class="pushbutton"></select>
+		<button id="btn" class="pushbutton">Select</button>
+	</section>
 
-<section id="scrobble" class="hide">
-	<h4>Manual Scrobble:</h4>
-	<div class="slidecontainer">
-		<input type="range" min="1" max="100" value="0" class="slider" id="scrobbleslider">
-	</div>
-	<div class="scrobbleButtons">
-		<h4><span id="scrobbleTime"></span>/<span id="totalTime"></span></h4>
-		<button id="play" class="pushbutton">Play</button>
-		<button id="pause" class="pushbutton">Pause</button>
-		<button id="stop" class="pushbutton">Finished?</button>
-	</div>
-	<div id="stopReminder" class="hide">
-		<h4>Remember to click "Finished?" when you have completed the episode</h4>
-	</div>
-</section>
+	<section id="scrobble" class="hide">
+		<h4>Manual Scrobble:</h4>
+		<div class="slidecontainer">
+			<input type="range" min="1" max="100" value="0" class="slider" id="scrobbleslider">
+		</div>
+		<div class="scrobbleButtons">
+			<h4><span id="scrobbleTime"></span>/<span id="totalTime"></span></h4>
+			<button id="play" class="pushbutton">Play</button>
+			<button id="pause" class="pushbutton">Pause</button>
+			<button id="stop" class="pushbutton">Finished?</button>
+		</div>
+		<div id="stopReminder" class="hide">
+			<h4>Remember to click "Finished?" when you have completed the episode</h4>
+		</div>
+	</section>
 
-<section id="progress" style="display: none">
-	<h3 id="pr"></h3>
-</section>
-<button id="pbtn" style="display: none">Progress</button>
+	<section id="progress" style="display: none">
+		<h3 id="pr"></h3>
+	</section>
+	<button id="pbtn" style="display: none">Progress</button>
 
-<!-- <br>
-<br>
-<br> -->
-<section id="meta">
-	<a href="#" id="logout">Logout</a>
-</section>
+	<!-- <br>
+	<br>
+	<br> -->
+	<section id="meta">
+		<a href="#" id="logout">Logout</a>
+	</section>
 
-<script src="popup.js"></script>
+	<script src="popup.js"></script>
 </body>
