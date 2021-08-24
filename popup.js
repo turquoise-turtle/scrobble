@@ -234,6 +234,7 @@ function loadEpisode(currentepobj) {
 	if (currentepobj == null) {
 		//no next episode
 		qS('#ep').style.display = "";
+		qS('#showtitlecontainer').classList.remove('hide');
 		qS('#showtitle').classList.remove('hide');
 		qS('#eptitle').textContent = 'No Episodes Left';
 		for (var actionel of document.getElementsByClassName('action')) {
@@ -253,6 +254,7 @@ function loadEpisode(currentepobj) {
 		qS('#epnum').textContent = epPos + ': ';
 		qS('#eptitle').textContent = eptitle;
 		qS('#ep').style.display = "";
+		qS('#showtitlecontainer').classList.remove('hide');
 		
 		qS('#loadingtext').classList.add('hide');
 		qS('#showtitle').classList.remove('hide');
@@ -349,6 +351,7 @@ function loadMovie() {
 		window.movieobj = body;
 		window.movie = true;
 		qS('#ep').style.display = "";
+		qS('#showtitlecontainer').classList.remove('hide');
 		qS('#loadingtext').classList.add('hide');
 		qS('#showtitle').classList.remove('hide');
 		
@@ -479,7 +482,7 @@ function refresh() {
 		qS('#scrobble').classList.add('hide');
 
 		qS('#epnum').classList.add('hide');
-		qS('#showtitle').classList.add('hide');
+		//qS('#showtitle').classList.add('hide');
 		qS('#eptitle').classList.add('hide');
 		qS('#loadingtext').classList.remove('hide');
 		console.log(qS('#showtitle'))
