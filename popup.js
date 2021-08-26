@@ -713,7 +713,7 @@ function initiateSelect() {
 	qS('#episodeSelectBtn').addEventListener('click', function(){
 		var season = qS('#seasonSelect').value;
 		var episode = qS('#episodeSelect').value;
-		if (season != 'ZZZ' && episode != 'ZZZ') {
+		if (season != 'ZZZ' && season != '' && episode != 'ZZZ' && episode != '') {
 			qS('#loadobject').classList.remove('hide');
 			
 			var headers = {
