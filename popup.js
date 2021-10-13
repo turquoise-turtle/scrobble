@@ -161,14 +161,26 @@ function showlist(list, years, movie) {
 	
 }
 
-function initiateshow(show, movie) {
+function initiateshow(show, movie, title) {
+	qS('#searchshow').classList.add('hide');
+	qS('#favourites').classList.add('hide');
 	qS('#loadobject').classList.remove('hide');
+
 
 	movie = movie || false;
 	window.token = localStorage.getItem('SCROBBLEaccess_token');
 	window.showid = show;
 	if (!movie) {
+		var lists = localStorage.getItem('favourites_list') || "{}";
+		var list = JSON.parse(lists);
+		if (list[show] != null) {
+			qS('#like').checked = true;
+		}
+
 		qS('#showtitle').href = 'https://trakt.tv/shows/' + show;
+		if (title != null) {
+			qS('#showtitle').textContent = title;
+		}
 		getnextep();
 	} else {
 		qS('#showtitle').href = 'https://trakt.tv/movies/' + show;
@@ -742,3 +754,30 @@ qS('#logout').addEventListener('click', function(e){
 	localStorage.removeItem('SCROBBLEdate');
 	location.reload();
 })
+
+
+qS('#like').addEventListener('change', function() {
+	if (this.checked) {
+		//console.log("Checkbox is checked..");
+		saveToFavourites();
+	} else {
+		//console.log("Checkbox is not checked..");
+		removeFromFavourites();
+	}
+});
+
+function saveToFavourites() {
+	var slug = window.showid;
+	var title = qS('#showtitle').textContent;
+	var lists = localStorage.getItem('favourites_list') || "{}";
+	var list = JSON.parse(lists);
+	list[slug] = title;
+	localStorage.setItem('favourites_list', JSON.stringify(list));
+}
+function removeFromFavourites() {
+	var id = window.showid;
+	var lists = localStorage.getItem('favourites_list') || "{}";
+	var list = JSON.parse(lists);
+	delete list[id];
+	localStorage.setItem('favourites_list', JSON.stringify(list));
+}

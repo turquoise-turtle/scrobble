@@ -118,7 +118,7 @@ a:hover {
 }
 
 .hide {
-	display: none;
+	display: none !important;
 }
 .inline {
 	display: inline;
@@ -156,3 +156,23 @@ button.pushbutton:active, div.pushbutton:active {
 #loadobject {
 	margin-bottom: 16px;
 }
+
+#favourites {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#like {
+	display: none;
+}
+#outline, #fill {
+	position: relative;
+	bottom: -0.6em;
+}
+#outline > img, #fill > img {
+	width: 2em;
+}
+#like ~ #outline {display: inline-block;}
+#like:checked ~ #outline {display: none;}
+#like ~ #fill {display: none;}
+#like:checked ~ #fill {display: inline-block;}
