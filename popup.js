@@ -160,9 +160,11 @@ function searchshows(showtitle, movie) {
 }
 
 function showlist(list, years, movie) {
+	qS('#favourites').classList.add('hide');
+
 	var select = qS('#sel');
 	var box = qS('#selectshows')
-	box.style.display = '';
+	box.classList.remove('hide');
 	for (var slug in list) {
 		var opt = document.createElement('option');
 		opt.value = slug;
@@ -173,7 +175,7 @@ function showlist(list, years, movie) {
 	var btn = qS('#btn');
 	btn.addEventListener('click', function() {
 		var slug = select.value;
-		box.style.display = 'none';
+		qS('#selectshows').classList.add('hide');
 		var title = select.options[select.selectedIndex].text;
 		qS('#showtitle').textContent = title;
 		initiateshow(slug, movie);
