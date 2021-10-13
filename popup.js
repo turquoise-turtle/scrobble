@@ -83,6 +83,26 @@ var qS = document.querySelector.bind(document);
 var movie = false;
 var movieobj = null;
 
+var favlists = localStorage.getItem('favourites_list') || "{}";
+var favlist = JSON.parse(favlists);
+for (var show in favlist) {
+	var e = document.createElement('button');
+	e.classList.add('pushbutton');
+	e.dataset.slug = show;
+	e.textContent = favlist[show];
+	qS('#favourites').appendChild(e);
+	e.addEventListener('click', favbutton);
+
+	qS('#favourites').classList.remove('hide');
+}
+function favbutton(evt) {
+	var newshow = evt.target.dataset.slug;
+	var newtitle = evt.target.textContent;
+	initiateshow(newshow, false, newtitle);
+}
+
+
+
 function searchshows(showtitle, movie) {
 	movie = movie || false;
 

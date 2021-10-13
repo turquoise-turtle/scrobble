@@ -165,14 +165,14 @@ button.pushbutton:active, div.pushbutton:active {
 #like {
 	display: none;
 }
-#outline, #fill {
+#outline, #filled {
 	position: relative;
 	bottom: -0.6em;
 }
-#outline > img, #fill > img {
+#outline > img, #filled > img {
 	width: 2em;
 }
 #like ~ #outline {display: inline-block;}
 #like:checked ~ #outline {display: none;}
-#like ~ #fill {display: none;}
-#like:checked ~ #fill {display: inline-block;}
+#like ~ #filled {display: none;}
+#like:checked ~ #filled {display: inline-block;}
