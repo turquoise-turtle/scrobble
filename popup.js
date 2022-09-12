@@ -236,6 +236,9 @@ function getnextep() {
 		}
 
 		
+		//quickscrobble-only rewatch progress with date set in localstorage
+		var rwconfig = localStorage.getItem('SCROBBLErwconfig') || {};
+
 		//promisify this
 		return new Promise(function(resolve, reject) {
 			console.log('promise here')
@@ -246,7 +249,9 @@ function getnextep() {
 				//handle rewatching show
 				//Your app can adjust the progress by ignoring episodes with a last_watched_at prior to the reset_at.
 				resolve(getnexteprewatch(window.showid, body['reset_at'], body['seasons']))
-
+			} else if (rwconfig[window.showid] != null) {
+				//quickscrobble-only rewatch progress with date set in localstorage
+				resolve(getnexteprewatch(window.showid, rwconfig[window.showid], body['seasons']))
 			} else {
 				resolve(null);
 			}
