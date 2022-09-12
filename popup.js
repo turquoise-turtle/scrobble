@@ -237,7 +237,8 @@ function getnextep() {
 
 		
 		//quickscrobble-only rewatch progress with date set in localstorage
-		var rwconfig = localStorage.getItem('SCROBBLErwconfig') || {};
+		var rwconfigs = localStorage.getItem('SCROBBLErwconfig') || '{}';
+		var rwconfig = JSON.parse(rwconfigs);
 
 		//promisify this
 		return new Promise(function(resolve, reject) {
