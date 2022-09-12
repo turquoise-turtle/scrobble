@@ -252,6 +252,7 @@ function getnextep() {
 				resolve(getnexteprewatch(window.showid, body['reset_at'], body['seasons']))
 			} else if (rwconfig[window.showid] != null) {
 				//quickscrobble-only rewatch progress with date set in localstorage
+				console.log(rwconfig[window.showid], 'local rewatch');
 				resolve(getnexteprewatch(window.showid, rwconfig[window.showid], body['seasons']))
 			} else {
 				resolve(null);
